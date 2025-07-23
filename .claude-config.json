@@ -1,0 +1,10 @@
+{
+  "commit": {
+    "messageFormat": "conventional",
+    "rules": {
+      "type": ["feat", "fix", "docs", "style", "refactor", "test", "chore"],
+      "maxLength": 72,
+      "requireScope": false
+    }
+  }
+}
