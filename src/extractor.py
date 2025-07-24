@@ -288,18 +288,25 @@ def extract_pdf(pdf_path: str) -> Dict[str, Any]:
 
 def save_extraction_results(pdf_path: str, result: Dict[str, Any]) -> Tuple[str, str]:
     """
-    Save extraction results to JSON and TXT files
+    Save extraction results to JSON and TXT files in output folder
     Returns paths of saved files
     """
     pdf_path_obj = Path(pdf_path)
     
+    # Create output folder if it doesn't exist
+    output_dir = Path("output")
+    output_dir.mkdir(exist_ok=True)
+    
+    # Generate output file paths in the output folder
+    base_name = pdf_path_obj.stem
+    json_output = output_dir / f"{base_name}.json"
+    txt_output = output_dir / f"{base_name}.txt"
+    
     # Save as JSON file
-    json_output = pdf_path_obj.with_suffix('.json')
     with open(json_output, 'w', encoding='utf-8') as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
     
     # Save raw text as TXT file
-    txt_output = pdf_path_obj.with_suffix('.txt')
     with open(txt_output, 'w', encoding='utf-8') as f:
         f.write(result['content']['raw_text'])
     
