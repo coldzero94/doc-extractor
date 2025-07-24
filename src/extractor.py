@@ -294,7 +294,7 @@ def save_extraction_results(pdf_path: str, result: Dict[str, Any]) -> Tuple[str,
     pdf_path_obj = Path(pdf_path)
     
     # Create output folder if it doesn't exist
-    output_dir = Path("output")
+    output_dir = Path("/output")
     output_dir.mkdir(exist_ok=True)
     
     # Generate output file paths in the output folder
