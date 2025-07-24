@@ -286,6 +286,26 @@ def extract_pdf(pdf_path: str) -> Dict[str, Any]:
     }
 
 
+def save_extraction_results(pdf_path: str, result: Dict[str, Any]) -> Tuple[str, str]:
+    """
+    Save extraction results to JSON and TXT files
+    Returns paths of saved files
+    """
+    pdf_path_obj = Path(pdf_path)
+    
+    # Save as JSON file
+    json_output = pdf_path_obj.with_suffix('.json')
+    with open(json_output, 'w', encoding='utf-8') as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+    
+    # Save raw text as TXT file
+    txt_output = pdf_path_obj.with_suffix('.txt')
+    with open(txt_output, 'w', encoding='utf-8') as f:
+        f.write(result['content']['raw_text'])
+    
+    return str(json_output), str(txt_output)
+
+
 if __name__ == "__main__":
     # Example usage
     import sys
@@ -302,5 +322,10 @@ if __name__ == "__main__":
     # Extract data
     result = extract_pdf(pdf_file)
     
-    # Print result as JSON
+    # Save to files
+    json_path, txt_path = save_extraction_results(pdf_file, result)
+    print(f"JSON output saved to: {json_path}")
+    print(f"Text output saved to: {txt_path}")
+    
+    # Print result as JSON to console
     print(json.dumps(result, indent=2, ensure_ascii=False))
